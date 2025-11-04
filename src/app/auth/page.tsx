@@ -1,11 +1,14 @@
 'use client'
-import React, { FormEventHandler, useState } from 'react'
+import React, { useState } from 'react'
 import styles from '@/styles/EditPage.module.css'
 import { login } from '@/libraries/api'
+import { setCookie, getProfile } from '@/libraries/auth'
+import { useRouter } from 'next/navigation'
 
 export default function Auth() {
   const [email, setEmail] = useState('john@mail.com')
   const [password, setPassword] = useState('changeme')
+  const router = useRouter()
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
@@ -15,10 +18,22 @@ export default function Auth() {
       return
     }
 
-    const data = await login(email, password);
-    console.log(data);
+    try {
+      const data = await login(email, password);
+      const profile = await getProfile(data.access_token)
+      alert(`Login success.\nWellcome back ${profile.name}`)
 
-    
+      console.log('JWT:', data); // For development
+
+      // Set Cookies
+      setCookie('accessToken', data.access_token, 30);
+      setCookie('refreshToken', data.refresh_token, 30);
+      setCookie('user-data', JSON.stringify(profile), 30);
+
+      router.push('/')
+    } catch (err) {
+      alert('Email or password invalid!');
+    }
   }
 
   return (
@@ -33,7 +48,10 @@ export default function Auth() {
           <input type="password" value={password} onChange={(e)=> setPassword(e.target.value)} placeholder=' ' />
           <span>Password</span>
         </label>
-        <button className='button'>Login</button>
+        <div style={{display: 'flex', gap: '0.5rem'}}>
+          <button className='button'>Login</button>
+          <button className='delete' type='button' onClick={()=> {router.push('/')}}>Cancel</button>
+        </div>
       </form>
     </section>
   )

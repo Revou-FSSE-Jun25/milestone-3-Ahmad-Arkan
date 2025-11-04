@@ -19,5 +19,5 @@ export type ProductResponse = {
 export type ProductsType = {
   title?: string,
   searchParam?: string,
-  productsData?: any
+  productsData?: ProductResponse[]
 }

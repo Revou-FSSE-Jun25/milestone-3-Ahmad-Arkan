@@ -2,12 +2,25 @@
 import Link from "next/link";
 import styles from "@/styles/Navbar.module.css"
 import Icon from "@/components/Icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { getCookie } from "@/libraries/auth";
+import Image from "next/image";
 
 export default function Navbar () {
   const [keyword, setKeyword] = useState<string>('');
+  const [isAuth, setIsAuth] = useState<boolean>(false)
+  const [profile, setProfile] = useState<Profile>()
   const router = useRouter()
+  const token = getCookie('accessToken')
+  const userData = getCookie('user-data')
+
+  useEffect(()=> {
+    if (token) {
+      setIsAuth(true);
+      setProfile(JSON.parse(userData))
+    }
+  }, [token])
 
   const handleSearchChange = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -41,8 +54,23 @@ export default function Navbar () {
           <Link href="/cart"><Icon name="cart" className={styles.logo} /></Link>
         </button>
         <div className={styles.account}>
-          <Link href="/admin"><button>Admin Page</button></Link>
-          <Link href="/auth"><button>Login</button></Link>
+          {isAuth ?
+          <>
+            <Link href='/profile'>
+              <button className={styles.avatar}>
+                <Image
+                  src={profile.avatar}
+                  alt={profile.name}
+                  width={30}
+                  height={30}
+                />
+              </button>
+            </Link>
+            <Link href="/admin"><button>Admin Page</button></Link>
+          </> : <>
+            <Link href="/auth"><button>Login</button></Link>
+          </>
+          }
         </div>
       </menu>
       <menu className={styles.menu2}>

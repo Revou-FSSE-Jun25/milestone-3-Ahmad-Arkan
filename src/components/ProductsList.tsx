@@ -9,10 +9,15 @@ import { useEffect, useState, useContext } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import useSWR, { mutate } from "swr";
+import { getCookie } from "@/libraries/auth";
+import { useRouter } from "next/navigation";
 
 export default function Items ({title, searchParam}: ProductsType) {
   const [products, setProducts] = useState<any>([]);
   const { addToCart } = useContext(CartContext);
+  const [isAuth, setIsAuth] = useState<boolean>(false)
+  const router = useRouter()
+  const token = getCookie('accessToken')
 
   const { data: productsData, error, isLoading } = useSWR(
     'products',          // key unik
@@ -23,6 +28,7 @@ export default function Items ({title, searchParam}: ProductsType) {
   );
 
   useEffect(() => {
+    if (token) setIsAuth(true);
     if (!productsData) return;
 
     if (searchParam) {
@@ -35,7 +41,7 @@ export default function Items ({title, searchParam}: ProductsType) {
       // kalau tidak ada pencarian, tampilkan semua
       setProducts(productsData);
     }
-  }, [productsData, searchParam]);
+  }, [productsData, searchParam, token]);
 
   return (
     <section>
@@ -79,8 +85,12 @@ export default function Items ({title, searchParam}: ProductsType) {
                   ${products.price || "???"}
                 </Link>
                 <button
-                  onClick={() => {
-                    addToCart(products);
+                  onClick={()=> {
+                    if (!isAuth) {
+                      router.push('/auth')
+                      return
+                    }
+                    addToCart(products); 
                     alert('The product has added to cart.');
                   }}
                   className={styles.addCard}>

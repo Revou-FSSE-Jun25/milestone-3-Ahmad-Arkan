@@ -1,6 +1,5 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { getProduct } from "@/libraries/api";
 import { ProductResponse } from '@/types/product'
@@ -8,77 +7,55 @@ import styles from '@/styles/EditPage.module.css'
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-export default function EditPage() {
+export default function addPage() {
   const [title, setTitle] = useState("")
   const [price, setPrice] = useState("")
   const [description, setDescription] = useState("")
-  const [images, setImages] = useState("")
+  const [images, setImages] = useState('')
   const [categoryId, setCategoryId] = useState<number>(1)
-
-  const { id } = useParams()
-  const productId = parseInt(id as string, 10)
   const router = useRouter()
 
-  useEffect(() => {
-    if (!id) return;
-    const fetchProduct = async ()=> {
-      try {
-        const data: ProductResponse = await getProduct(productId)
-
-        setTitle(data.title || "")
-        setPrice(String(data.price || ""))
-        setDescription(data.description || "")
-        setImages(data.images.join('\n'));
-        setCategoryId(data.category.id)
-      } catch (err) {
-        console.error("Failed to fetch product:", err);
-      }
-    }
-
-    fetchProduct()
-  }, [id]);
-
   const handleSubmit = async (pre: React.FormEvent)=> {
-    pre.preventDefault();
-
-    const imageArray = images
-       .split(', ')
-       .map((img) => img.trim())
-       .filter(Boolean);
-
-    alert('submitted')
-    try {
-      const res = await fetch(`https://api.escuelajs.co/api/v1/products/${productId}`, {
-        method: "PUT",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          title: title,
-          price: Number(price),
-          description: description,
-          images: imageArray,
+      pre.preventDefault();
+  
+      const imageArray = images
+         .split(',')
+         .map((img) => img.trim())
+         .filter(Boolean);
+  
+      alert('submitted')
+      try {
+        const res = await fetch(`https://api.escuelajs.co/api/v1/products/`, {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            title: title,
+            price: Number(price),
+            description: description,
+            images: imageArray,
           categoryId: categoryId,
+          })
         })
-      })
-
-      console.log(res)
-
-      if (!res.ok) {
-        const errText = await res.text()
-        console.error("Server responded:", res.status, errText)
-        throw new Error("Update failed")
+  
+        console.log(res)
+  
+        if (!res.ok) {
+          const errText = await res.text()
+          console.error("Server responded:", res.status, errText)
+          throw new Error("Update failed")
+        }
+  
+        const updated = await res.json()
+        console.log("updated",updated)
+        router.push('/admin')
+      } catch (err) {
+        console.error("Error", err)
       }
-
-      const updated = await res.json()
-      console.log("updated",updated)
-      router.push('/admin')
-    } catch (err) {
-      console.error("Error", err)
     }
-  }
 
   return (
     <section>
-      <h1>Edit Page</h1>
+      <h1>Create Page</h1>
       <form onSubmit={handleSubmit} className={styles.parent}>
         <label htmlFor="name">
           <input name={title} value={title} onChange={(e) => setTitle(e.target.value)} id="name" type="text" placeholder=" " />
@@ -114,5 +91,5 @@ export default function EditPage() {
         </div>
       </form>
     </section>
-  );
+  )
 }

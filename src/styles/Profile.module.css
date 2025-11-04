@@ -1,0 +1,28 @@
+.parent {
+  width: 500;
+}
+
+.profile {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.profile img {
+  width: 120px;
+  height: auto;
+  border-radius: var(--border-radius);
+}
+
+.info {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.info button {
+  bottom: 0.5rem;
+  position: absolute;
+}

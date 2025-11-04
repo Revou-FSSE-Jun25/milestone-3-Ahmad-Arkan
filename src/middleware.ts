@@ -2,11 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
-  const privatePages = ['/admin/*', '/admin']
-  const auth : boolean = false // Simulated authenticator redirect
+  const privateRoutes = ['/admin/*', '/admin', '/cart']
+  
+  const token = request.cookies.get("accessToken")?.value;
 
-  if (privatePages.includes(pathname) && !auth) {
-    return NextResponse.redirect(new URL('/auth', request.url))
+  if (privateRoutes.includes(pathname) && !token) {
+    const loginUrl = new URL("/auth", request.url);
+    loginUrl.searchParams.set("redirect", pathname);
+    return NextResponse.redirect(loginUrl);
   }
 
   // return NextResponse.redirect(new URL('/', request.url))

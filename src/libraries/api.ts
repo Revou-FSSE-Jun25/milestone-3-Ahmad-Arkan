@@ -1,10 +1,9 @@
 import { ProductResponse } from "@/types/product"
-import next from "next";
 import { notFound } from "next/navigation";
 const DATABASE_API = "https://api.escuelajs.co/api/v1"; // API Key
 const paginations = {
   offset: 0,
-  limit: 50
+  limit: 0
 }
 
 // Products Fetching API
@@ -44,6 +43,10 @@ export async function login(email: string, password: string) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
     });
+
+    if (!res.ok) {
+      throw new Error(res.status.toString());
+    }
 
     return await res.json();
   } catch (err) {
