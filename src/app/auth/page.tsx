@@ -2,10 +2,12 @@
 import React, { useState } from 'react'
 import styles from '@/styles/EditPage.module.css'
 import { login } from '@/libraries/api'
-import { setCookie, getProfile } from '@/libraries/auth'
+import { setCookie, getProfile, getCookie } from '@/libraries/auth'
 import { useRouter } from 'next/navigation'
+import { useAuthRefresh } from '@/hooks/useAuthRefresh'
 
 export default function Auth() {
+  useAuthRefresh()
   const [email, setEmail] = useState('john@mail.com')
   const [password, setPassword] = useState('changeme')
   const router = useRouter()
@@ -26,9 +28,9 @@ export default function Auth() {
       console.log('JWT:', data); // For development
 
       // Set Cookies
-      setCookie('accessToken', data.access_token, 30);
-      setCookie('refreshToken', data.refresh_token, 30);
-      setCookie('user-data', JSON.stringify(profile), 30);
+      setCookie('accessToken', data.access_token, (10*60));
+      setCookie('refreshToken', data.refresh_token, (20*24*60));
+      setCookie('user-data', JSON.stringify(profile), (10*60));
 
       router.push('/')
     } catch (err) {

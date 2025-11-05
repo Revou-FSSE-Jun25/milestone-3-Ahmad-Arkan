@@ -12,7 +12,7 @@ export default function ProductManagement() {
   const [loading, setLoading] = useState<boolean>(true);
 
   const handleDelete = async (productId: number)=> {
-    const confirmDelete = confirm(`Are you sure to delete this product with ID ${productId}?`);
+    const confirmDelete = confirm(`Are You Sure To Delete This Product With ID ${productId}?\nThis Action Is Immutable`);
     if (!confirmDelete) return;
     try {
       const res = await fetch(`https://api.escuelajs.co/api/v1/products/${productId}`, {
@@ -22,13 +22,13 @@ export default function ProductManagement() {
       if (!res.ok) {
         const errText = await res.text()
         console.error("Server responded:", res.status, errText)
-        throw new Error("Update failed")
+        throw new Error("Failed Delete Product")
       }
 
-      alert(`Product with ID ${productId} has been deleted.`)
+      alert(`Deleted Product With ID ${productId} Successfully`)
       await getProducts().then((data) => setProducts(data));
     } catch (err) {
-      console.error("Error", err)
+      console.error("Failed Delete Product", err)
     }
   }
 

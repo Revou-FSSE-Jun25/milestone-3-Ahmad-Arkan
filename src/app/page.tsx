@@ -43,7 +43,7 @@ export default function Home() {
     <>
       <Hero hero={hero} />
       <Items />
-      <ThemeToggle />
+      {/* <ThemeToggle /> */}
     </>
   );
 }

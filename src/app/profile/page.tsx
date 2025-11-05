@@ -7,13 +7,17 @@ import { useEffect, useState } from "react";
 
 export default function Profile() {
   const [data, setData] = useState<Profile>()
+  const get = getCookie('user-data')
 
   useEffect(()=> {
-    const res = JSON.parse(getCookie('user-data'))
-    setData(res)
+    if (!get) {
+      return
+    } else {
+      setData(JSON.parse(get))
+    }    
   }, [])
 
-  if (!data) return <section><h1>Loading...</h1></section>
+  if (!data) return <section className={styles.parent}><h1>Loading...</h1></section>
 
   return (
     <section className={styles.parent}>

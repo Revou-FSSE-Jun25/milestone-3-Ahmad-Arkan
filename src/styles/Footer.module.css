@@ -1,0 +1,57 @@
+.parent {
+  bottom: 0;
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(var(--background));
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  box-shadow: var(--box-shadow);
+}
+
+.logo svg {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: rgb(var(--accent));
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+}
+.description h1 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.8rem;
+}
+.description p {
+  font-size: 1rem;
+  font-weight: 500;
+}
+.description span {
+  color: rgba(var(--foreground), var(--translucent));
+  font-size: 1.5rem;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: end;
+  gap: 0.5rem;
+}
+.buttons button {
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 500;
+}
+.buttons a {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

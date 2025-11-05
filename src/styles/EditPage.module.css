@@ -28,6 +28,7 @@
   resize: vertical;
 }
 
+/* Form onFocus */
 .parent label span {
   position: absolute;
   color: rgba(var(--foreground), var(--translucent));
@@ -39,4 +40,13 @@
 .parent label textarea:not(:placeholder-shown) + span {
   font-size: 0.8rem;
   transform: translateY(-17px);
+}
+
+/* Form Validation With CSS */
+.try label:has(input:invalid),
+.try label:has(textarea:invalid) {
+  border: 0.1rem solid rgba(var(--error), var(--translucent));
+}
+.parent label:has(input:user-invalid) {
+  border: 0.1rem solid rgba(var(--error), var(--translucent));
 }

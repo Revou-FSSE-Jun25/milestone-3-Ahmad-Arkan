@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
-  const privateRoutes = ['/admin/*', '/admin', '/cart']
+  const privateRoutes = ['/admin/*', '/admin', '/cart', '/profile']
   
   const token = request.cookies.get("accessToken")?.value;
 

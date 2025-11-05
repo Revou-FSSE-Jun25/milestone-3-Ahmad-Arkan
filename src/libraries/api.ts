@@ -1,5 +1,6 @@
 import { ProductResponse } from "@/types/product"
 import { notFound } from "next/navigation";
+import { getProfile, setCookie } from "./auth";
 const DATABASE_API = "https://api.escuelajs.co/api/v1"; // API Key
 const paginations = {
   offset: 0,
@@ -52,5 +53,32 @@ export async function login(email: string, password: string) {
   } catch (err) {
     console.error('Failed log in :', err)
     throw new Error('Failed log in, please try again later')
+  }
+}
+
+// Get Refresh Token
+export async function getRefresh(token: string | undefined): Promise<string | null> {
+  try {
+    const res = await fetch(`${DATABASE_API}/auth/refresh-token`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ "refreshToken": token })
+    });
+
+    if (!res.ok) {
+      throw new Error(res.status.toString());
+    }
+
+    const data = await res.json()
+    const profile = await getProfile(data.access_token)
+
+    // Set Cookies
+    setCookie('accessToken', data.access_token, (10*60));
+    setCookie('refreshToken', data.refresh_token, (20*24*60));
+    setCookie('user-data', JSON.stringify(profile), (10*60));
+
+    return data.access_token
+  } catch (err) {
+
   }
 }

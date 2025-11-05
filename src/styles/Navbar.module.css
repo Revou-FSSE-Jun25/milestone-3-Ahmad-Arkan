@@ -2,12 +2,12 @@
 .navbar {
   z-index: 1000;
   position: fixed;
-  top: 0.5rem;
-  left: 0.5rem;
-  right: 0.5rem;
+  top: 0;
+  left: 0;
+  right: 0;
   background-color: rgba(var(--accent), var(--sub-translucent));
   backdrop-filter: var(--backdrop-content);
-  border-radius: var(--border-radius);
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
   box-shadow: var(--box-shadow);
 }
 .menu1 {
@@ -17,7 +17,7 @@
   align-items: center;
   gap: 0.8rem;
   background-color: rgba(var(--accent), var(--translucent));
-  border-radius: var(--border-radius);
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
 }
 .menu2 {
   display: flex;
