@@ -1,20 +1,23 @@
 # RevoShop, a Fictional Ecommerce Website
-Welcome to RevoShop, a fictional e-commerce website built by Ahmadrka. Used Next.js as framework and [Fake Store API](https://react-hook-form.com) for data dummy.
+Welcome to RevoShop, a fictional e-commerce website built by [Ahmadrka](https://ahmadrka.com). Used Next.js as framework and [Fake Store API](https://fakeapi.platzi.com) for data dummy.
 
 ## Technology
 ### Built with:
+- [Node.js](https://nodejs.org/)
 - [Next.js](https://nextjs.org/)
 - [CSS Module](https://www.google.com/search?q=css+modules)
-- [Node.js](https://nodejs.org/)
-
-### Library:
-- 
+- [SWR](https://swr.vercel.app)
+- [Fake Store API](https://fakeapi.platzi.com)
 
 
 ## Pages
 - Home Page: Displaying all products and navigation pages.
 - Product Detail: Title, description, price and _Buy_ or _Add to Cart_ button.
 - Cart List: All the items in the cart are here.
+- Login and Profile Page: 
+- Admin Dashboard:
+- Add or Edit Product
+- FAQ Page:
 
 
 ## Component
@@ -22,8 +25,12 @@ Welcome to RevoShop, a fictional e-commerce website built by Ahmadrka. Used Next
   - Title for home page button.
   - Interactive search bar.
   - Cart list button.
+  - Login and profile button.
+  - Admin dashboard button.
   - ~~Product category button.~~ _(coming soon)_
   - ~~Preferences button.~~ _(coming soon)_
+- Hero Section:
+  - 
 - Product List:
   - Display all and relevance products.
   - Products image and title preview.
@@ -34,27 +41,61 @@ Welcome to RevoShop, a fictional e-commerce website built by Ahmadrka. Used Next
   - Product title and description.
   - Action (_Buy_ or _Add to Cart_) button.
   - Other relevance products.
- - Cart List:
-   - Product image and title listing in the cart.
-   - Product quantity and remove button.
-   - Navigate product to detail page.
-   - ~~Total price of all product in the cart.~~ _(coming soon)_
-   - ~~Checkout or delete actions~~ _(coming soon)_
+- Product Management:
+  -
+- Cart List:
+  - Product image and title listing in the cart.
+  - Product quantity and remove button.
+  - Navigate product to detail page.
+  - ~~Total price of all product in the cart.~~ _(coming soon)_
+  - ~~Checkout or delete actions~~ _(coming soon)_
+- Footer:
+  - 
 
 
 ## Features
 ### Style Features
-- anu
+- Simple and intuitive design.
+- Interactive effect.
+
+### CRUD Features
+- Use Rest API to fetch data.
+- Product List and Detail for read function.
+- Create product function.
+- Edit some product function.
+- Delete some product dunction.
+
+### Form Validation
+- Use cascading style for real time validation
+- Use typescript to prevent void data.
+
+### Authentication
+- Log in and log out function.
+- Use cookies for store token key.
+- Middleware for unauthorized redirect.
+
+### Other Features
+- Error 404 Page
+- Loading Page
+
 
 ## Assets
 > Some images are from 3rd party souce.
+### Images
+- Product Broken Image: _Stock_
+- Dashboard Hero: _Stock_
+- Admin Dashboard Hero: _Stock_
+- Products Images: Platzi API
+
 ### Fonts
 - Main font: AlanSans
 
 ### Color Scheme
+- Body: Pale `#f3f3f3`
 - Background: White `#fff`
 - Foreground: Dark `#171717`
 - Accent: Yellow `#e6b325`
+- Error: Red `#ff0a0a`
 
 
 ## Deployment
@@ -87,4 +128,3 @@ Hosted on [Netlify](https://netlify.com)
 	npm run
 	```
 6. **Congrats, now you running this website.**
-7. 
